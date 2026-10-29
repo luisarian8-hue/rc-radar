@@ -1,0 +1,160 @@
+{
+  "season": 2026,
+  "leagues": {
+    "ENG2": {
+      "id": 40,
+      "name": "Championship",
+      "country": "England"
+    },
+    "ESP1": {
+      "id": 140,
+      "name": "La Liga",
+      "country": "Spain"
+    },
+    "ESP2": {
+      "id": 141,
+      "name": "Segunda División",
+      "country": "Spain"
+    },
+    "ITA1": {
+      "id": 135,
+      "name": "Serie A",
+      "country": "Italy"
+    },
+    "ITA2": {
+      "id": 136,
+      "name": "Serie B",
+      "country": "Italy"
+    },
+    "GER1": {
+      "id": 78,
+      "name": "Bundesliga",
+      "country": "Germany"
+    },
+    "GER2": {
+      "id": 79,
+      "name": "2. Bundesliga",
+      "country": "Germany"
+    },
+    "GER3": {
+      "id": 80,
+      "name": "3. Liga",
+      "country": "Germany"
+    },
+    "FRA1": {
+      "id": 61,
+      "name": "Ligue 1",
+      "country": "France"
+    },
+    "FRA2": {
+      "id": 62,
+      "name": "Ligue 2",
+      "country": "France"
+    },
+    "NED1": {
+      "id": 88,
+      "name": "Eredivisie",
+      "country": "Netherlands"
+    },
+    "NED2": {
+      "id": 89,
+      "name": "Eerste Divisie",
+      "country": "Netherlands"
+    },
+    "POR1": {
+      "id": 94,
+      "name": "Primeira Liga",
+      "country": "Portugal"
+    },
+    "BEL1": {
+      "id": 144,
+      "name": "Jupiler Pro League",
+      "country": "Belgium"
+    },
+    "BEL2": {
+      "id": 145,
+      "name": "Challenger Pro League",
+      "country": "Belgium"
+    },
+    "TUR1": {
+      "id": 203,
+      "name": "Süper Lig",
+      "country": "Turkey"
+    },
+    "CZE1": {
+      "id": 345,
+      "name": "Czech Liga",
+      "country": "Czech-Republic"
+    },
+    "AUT1": {
+      "id": 218,
+      "name": "Bundesliga",
+      "country": "Austria"
+    },
+    "SUI1": {
+      "id": 207,
+      "name": "Super League",
+      "country": "Switzerland"
+    },
+    "SCO1": {
+      "id": 179,
+      "name": "Premiership",
+      "country": "Scotland"
+    },
+    "DEN1": {
+      "id": 119,
+      "name": "Superliga",
+      "country": "Denmark"
+    },
+    "NOR1": {
+      "id": 103,
+      "name": "Eliteserien",
+      "country": "Norway"
+    },
+    "SWE1": {
+      "id": 113,
+      "name": "Allsvenskan",
+      "country": "Sweden"
+    },
+    "POL1": {
+      "id": 106,
+      "name": "Ekstraklasa",
+      "country": "Poland"
+    },
+    "GRE1": {
+      "id": 197,
+      "name": "Super League 1",
+      "country": "Greece"
+    },
+    "CRO1": {
+      "id": 210,
+      "name": "HNL",
+      "country": "Croatia"
+    },
+    "SRB1": {
+      "id": 286,
+      "name": "Super Liga",
+      "country": "Serbia"
+    },
+    "UKR1": {
+      "id": 333,
+      "name": "Premier League",
+      "country": "Ukraine"
+    },
+    "HUN1": {
+      "id": 271,
+      "name": "NB I",
+      "country": "Hungary"
+    },
+    "ROU1": {
+      "id": 283,
+      "name": "Liga I",
+      "country": "Romania"
+    },
+    "RUS1": {
+      "id": 235,
+      "name": "Premier League",
+      "country": "Russia"
+    }
+  }
+}
