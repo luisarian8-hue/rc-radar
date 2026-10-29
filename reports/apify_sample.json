@@ -1,9 +1,66 @@
 [
   {
-    "givenUrl": "https://www.transfermarkt.com/fortuna-dusseldorf/kader/verein/38",
+    "givenUrl": "https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38",
     "id": "38",
-    "url": "https://www.transfermarkt.com/fortuna-dusseldorf/kader/verein/38",
+    "url": "https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38",
     "type": "club",
+    "players": [
+      {
+        "#": "1",
+        "Player": [
+          "Lasse Rieß",
+          "Goalkeeper"
+        ],
+        "Date of birth/Age": "27/07/2001 (25)",
+        "Market value": "€350K",
+        "Nat.": "Germany"
+      },
+      {
+        "#": "22",
+        "Player": [
+          "Louis Lord",
+          "Goalkeeper"
+        ],
+        "Date of birth/Age": "22/10/2003 (23)",
+        "Market value": "€250K",
+        "Nat.": "Germany"
+      },
+      {
+        "#": "41",
+        "Player": [
+          "Milán Czakó",
+          "Goalkeeper"
+        ],
+        "Date of birth/Age": "01/04/2006 (20)",
+        "Market value": "€25K",
+        "Nat.": "Hungary"
+      }
+    ]
+  },
+  {
+    "givenUrl": "https://www.transfermarkt.com/lionel-messi/profil/spieler/28003",
+    "id": "28003",
+    "url": "https://www.transfermarkt.com/lionel-messi/profil/spieler/28003",
+    "type": "player",
+    "Name in home country": "Lionel Andrés Messi Cuccitini",
+    "Date of birth/Age": "24/06/1987 (39)",
+    "Place of birth": "Rosario",
+    "Height": "1,70 m",
+    "Citizenship": [
+      "Argentina",
+      "Spain"
+    ],
+    "Position": "Attack - Right Winger",
+    "Foot": "left",
+    "Player agent": "Relatives",
+    "Current club": "Inter Miami CF",
+    "Joined": "15/07/2023",
+    "Contract expires": "31/12/2028",
+    "Last contract extension": "23/10/2025",
+    "Outfitter": "adidas",
+    "Social-Media": "",
+    "transfers": [],
+    "careerStats": [],
     "players": []
   }
 ]
