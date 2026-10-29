@@ -12,3 +12,5 @@ Traceback (most recent call last):
     s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: normalize() argument 2 must be str, not list
+Apify-Limits: {"current": {"monthlyUsageUsd": 1.0107279630770336, "monthlyActorComputeUnits": 0, "monthlyExternalDataTransferGbytes": 0.0006214557215571404, "monthlyProxySerps": 0, "monthlyUnblockerUnits": 0, "monthlyResidentialProxyGbytes": 0, "actorMemoryGbytes": 0, "actorCount": 0, "actorTaskCount": 0, "scheduleCount": 0, "activeActorJobCount": 0, "teamAccountSeatCount": 1}, "limits": {"maxMonthlyUsageUsd": 5, "maxMonthlyActorComputeUnits": 625, "maxMonthlyExternalDataTransferGbytes": 1000, "maxMonthlyProxySerps": 50000, "maxMonthlyUnblockerUnits": 1000000, "maxMonthlyResidentialProxyGbytes": 20, "maxAct
+Transfermarkt: 96/120 neu zugeordnet · 96/96 Profile · Apify diesen Monat vorher 1.01 $
