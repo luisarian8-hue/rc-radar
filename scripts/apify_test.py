@@ -21,7 +21,7 @@ def main():
                                  headers={"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"})
     with urllib.request.urlopen(req, timeout=300) as r:
         items = json.load(r)
-    players = [x for x in items if "spieler" in str(x.get("url", ""))]
+    players = [x for x in items if "spieler" in str(x.get("url", "")) or str(x.get("type", "")).lower() == "player"]
     keys = sorted({k for x in players for k in x.keys()})
     def has(pat):
         return sum(1 for x in players if any(pat in k.lower() and x.get(k) for k in x))
@@ -32,7 +32,7 @@ def main():
     text = "\n".join(md) + "\n"
     os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
     open(os.path.join(ROOT, "reports", "apify_test.md"), "w", encoding="utf-8").write(text)
-    json.dump(players[:5], open(os.path.join(ROOT, "reports", "apify_sample.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    json.dump(items[:5], open(os.path.join(ROOT, "reports", "apify_sample.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(text)
     print(text)
