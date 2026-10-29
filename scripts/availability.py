@@ -136,12 +136,25 @@ def main():
 def summarize(o):
     """Spielzeitquote vorher gegen letzte 6 Spiele, nur über belastbare Spiele."""
     seq, known = o["seq"], o["injuryData"]
+    # Lange Abwesenheiten (ab 4 Spielen am Stück ohne Eintrag) sind eher Verletzung, Wechsel oder
+    # Sonderfall als eine Trainerentscheidung: nicht als „nicht berücksichtigt“ werten.
+    i = 0
+    while i < len(seq):
+        if seq[i]["s"] == "U":
+            j = i
+            while j < len(seq) and seq[j]["s"] == "U":
+                j += 1
+            for x in seq[i:j]:
+                x["long"] = j - i >= 4
+            i = j
+        else:
+            i += 1
     def counts(xs):
-        avail = [x for x in xs if x["s"] in "SEB" or (x["s"] == "U" and known)]
+        avail = [x for x in xs if x["s"] in "SEB" or (x["s"] == "U" and known and not x.get("long"))]
         mins = sum(x["min"] for x in avail)
         return {"n": len(xs), "avail": len(avail), "share": round(mins / (90 * len(avail)), 3) if avail else None,
                 "starts": sum(1 for x in xs if x["s"] == "S"), "bench": sum(1 for x in xs if x["s"] == "B"),
-                "out": sum(1 for x in xs if x["s"] in "VG"), "unknown": sum(1 for x in xs if x["s"] == "U" and not known)}
+                "out": sum(1 for x in xs if x["s"] in "VG"), "unknown": sum(1 for x in xs if x["s"] == "U" and (not known or x.get("long")))}
     recent, before = seq[-RECENT:], seq[:-RECENT]
     trail = 0
     for x in reversed(seq):
@@ -155,7 +168,7 @@ def summarize(o):
     # Rollenverlust nur bei Belegen: genug belastbare Spiele in beiden Fenstern
     b, r = o["role"]["before"], o["role"]["recent"]
     o["role"]["loss"] = bool(b["share"] is not None and r["share"] is not None and b["avail"] >= 4 and r["avail"] >= 3
-                             and b["share"] >= .45 and r["share"] <= b["share"] - .3 and not injured_now)
+                             and b["share"] >= .45 and r["share"] <= .5 and r["share"] <= b["share"] - .3 and not injured_now)
 
 
 if __name__ == "__main__":
