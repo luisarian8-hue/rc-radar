@@ -42,6 +42,8 @@ def compact_fixture(f):
             "coach": (l.get("coach") or {}).get("id"), "coachName": (l.get("coach") or {}).get("name"),
             "xi": [x["player"]["id"] for x in l.get("startXI") or [] if x.get("player")],
             "bench": [x["player"]["id"] for x in l.get("substitutes") or [] if x.get("player")],
+            "form": l.get("formation"),
+            "grid": {str(x["player"]["id"]): x["player"].get("grid") for x in l.get("startXI") or [] if x.get("player")},
         }
     players = [compact_player(p, blk["team"]["id"]) for blk in (f.get("players") or []) for p in blk.get("players") or []]
     return {"id": f["fixture"]["id"], "date": f["fixture"]["date"][:10], "round": f["league"].get("round"),
@@ -56,7 +58,10 @@ def main():
     for key, lg in cfg["leagues"].items():
         store = load(f"data/af/{key}/matches.json", {"league": lg, "season": season, "matches": {}})
         fx = get("fixtures", league=lg["id"], season=season, status="FT-AET-PEN")["response"]
-        new = [f["fixture"]["id"] for f in fx if str(f["fixture"]["id"]) not in store["matches"]]
+        def stale(fid):
+            m = store["matches"].get(str(fid))
+            return m is None or any("form" not in t for t in m["teams"].values())
+        new = [f["fixture"]["id"] for f in fx if stale(f["fixture"]["id"])]
         for i in range(0, len(new), 20):
             for f in get("fixtures", ids="-".join(map(str, new[i:i + 20])))["response"]:
                 store["matches"][str(f["fixture"]["id"])] = compact_fixture(f)
@@ -81,6 +86,22 @@ def main():
                                                   "team": ((r.get("statistics") or [{}])[0].get("team") or {}).get("id")}
             meta["updated"] = today
             save(f"data/af/{key}/players.json", meta)
+        if load(f"data/af/{key}/prev.json", None) is None:
+            prev = {}
+            for r in pages("players", league=lg["id"], season=season - 1):
+                st = (r.get("statistics") or [{}])[0]
+                g = st.get("games") or {}
+                if not g.get("minutes"):
+                    continue
+                prev[str(r["player"]["id"])] = {
+                    "min": g.get("minutes") or 0, "apps": g.get("appearences") or 0, "pos": g.get("position"),
+                    "rat": float(g["rating"]) if g.get("rating") else None, "team": (st.get("team") or {}).get("name"),
+                    "g": STAT(st, "goals", "total") or 0, "a": STAT(st, "goals", "assists") or 0, "sh": STAT(st, "shots", "total") or 0,
+                    "kp": STAT(st, "passes", "key") or 0, "pa": STAT(st, "passes", "total") or 0, "pacc": STAT(st, "passes", "accuracy"),
+                    "tk": STAT(st, "tackles", "total") or 0, "int": STAT(st, "tackles", "interceptions") or 0,
+                    "du": STAT(st, "duels", "total") or 0, "duw": STAT(st, "duels", "won") or 0,
+                    "dra": STAT(st, "dribbles", "attempts") or 0, "drs": STAT(st, "dribbles", "success") or 0}
+            save(f"data/af/{key}/prev.json", {"season": season - 1, "players": prev})
         log.append(f"{key}: {len(store['matches'])} Spiele ({len(new)} neu), {len(inj)} Ausfälle, {len(meta['players'])} Spieler")
     print("\n".join(log))
     print(f"Abfragen in diesem Lauf: {CALLS['n']}")
