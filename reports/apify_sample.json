@@ -35,32 +35,119 @@
         "Market value": "€25K",
         "Nat.": "Hungary"
       }
-    ]
+    ],
+    "transfers": [],
+    "careerStats": []
   },
   {
-    "givenUrl": "https://www.transfermarkt.com/lionel-messi/profil/spieler/28003",
-    "id": "28003",
-    "url": "https://www.transfermarkt.com/lionel-messi/profil/spieler/28003",
-    "type": "player",
-    "Name in home country": "Lionel Andrés Messi Cuccitini",
-    "Date of birth/Age": "24/06/1987 (39)",
-    "Place of birth": "Rosario",
-    "Height": "1,70 m",
-    "Citizenship": [
-      "Argentina",
-      "Spain"
+    "id": "848509",
+    "url": "https://www.transfermarkt.com/jackson-tchatchoua/profil/spieler/848509",
+    "Name/Position": [
+      "Jackson Tchatchoua",
+      "Wolverhampton Wanderers"
     ],
-    "Position": "Attack - Right Winger",
-    "Foot": "left",
-    "Player agent": "Relatives",
-    "Current club": "Inter Miami CF",
-    "Joined": "15/07/2023",
-    "Contract expires": "31/12/2028",
-    "Last contract extension": "23/10/2025",
-    "Outfitter": "adidas",
-    "Social-Media": "",
+    "Position": "RB",
+    "Club": "Wolverhampton Wanderers",
+    "Age": "25",
+    "Market Value": "€12M",
+    "Agents": "DWMA",
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": [
+      "Cameroon",
+      "Belgium"
+    ],
+    "players": [],
     "transfers": [],
-    "careerStats": [],
-    "players": []
+    "careerStats": []
+  },
+  {
+    "id": "236206",
+    "url": "https://www.transfermarkt.com/olivier-tchatchoua/profil/spieler/236206",
+    "Name/Position": [
+      "Olivier Tchatchoua",
+      "Retired"
+    ],
+    "Position": "Defender",
+    "Club": "Retired",
+    "Age": "44",
+    "Market Value": null,
+    "Agents": null,
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": "Cameroon",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "1005297",
+    "url": "https://www.transfermarkt.com/rocky-marciano/profil/spieler/1005297",
+    "Name/Position": [
+      "Rocky Marciano",
+      "FC Baniyas"
+    ],
+    "Position": "CF",
+    "Club": "FC Baniyas",
+    "Age": "24",
+    "Market Value": "€200K",
+    "Agents": "NSPORTS & bGROUP",
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": "Cameroon",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "1205385",
+    "url": "https://www.transfermarkt.com/clemens-inou-tchatchoua/profil/spieler/1205385",
+    "Name/Position": [
+      "Clemens Inou Tchatchoua",
+      "KSC/FCB Donaustadt"
+    ],
+    "Position": "Defender",
+    "Club": "KSC/FCB Donaustadt",
+    "Age": "20",
+    "Market Value": null,
+    "Agents": null,
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": "Austria",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "1420394",
+    "url": "https://www.transfermarkt.com/michael-tchatchoua/profil/spieler/1420394",
+    "Name/Position": [
+      "Michael Tchatchoua",
+      "US Avranches U18"
+    ],
+    "Position": "Defender",
+    "Club": "US Avranches U18",
+    "Age": null,
+    "Market Value": null,
+    "Agents": null,
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": "France",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "1607774",
+    "url": "https://www.transfermarkt.com/harold-tchatchouang/profil/spieler/1607774",
+    "Name/Position": [
+      "Harold Tchatchouang",
+      "US Thionville Lusitanos U17"
+    ],
+    "Position": "Midfield",
+    "Club": "US Thionville Lusitanos U17",
+    "Age": null,
+    "Market Value": null,
+    "Agents": null,
+    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
+    "Nat.": "Luxembourg",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
   }
 ]
