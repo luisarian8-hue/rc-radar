@@ -27,8 +27,10 @@ def call(method, path, body=None):
 def used_usd():
     try:
         d = call("GET", "/users/me/limits")["data"]
+        print("Apify-Limits:", json.dumps({"current": d.get("current"), "limits": d.get("limits")})[:600])
         return float((d.get("current") or {}).get("monthlyUsageUsd") or 0)
-    except Exception:
+    except Exception as e:
+        print("Apify-Limits nicht lesbar:", e)
         return 0.0
 
 

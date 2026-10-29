@@ -34,14 +34,14 @@ jobs:
       - name: Transfermarkt über Apify
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
-        run: python scripts/tm.py | tee -a "$GITHUB_STEP_SUMMARY"
+        run: python scripts/tm.py 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" reports/tm_log.txt
       - name: Scores final
         run: python scripts/score.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Daten speichern
         run: |
           git config user.name "rc-radar-bot"
           git config user.email "rc-radar-bot@users.noreply.github.com"
-          git add data/ config/ radar.json
+          git add data/ config/ radar.json reports/
           git diff --cached --quiet || git commit -m "Wochenlauf $(date +%F)"
           git pull --rebase origin main
           git push
