@@ -52,6 +52,8 @@ def run(urls):
 
 
 def norm(s):
+    if isinstance(s, (list, tuple)):
+        s = " ".join(str(x) for x in s)
     s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9 ]", " ", s)
 
@@ -98,7 +100,16 @@ def main():
         q = f"{first} {m.get('last') or c['name']}".strip()
         queries[c["id"]] = q
     url_of = lambda q: "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=" + urllib.parse.quote(q)
-    items = run([url_of(q) for q in queries.values()]) if queries else []
+    cache = load("data/tm/search_cache.json", {})
+    fresh = [q for q in queries.values() if url_of(q) not in cache]
+    if fresh:
+        got_items = run([url_of(q) for q in fresh])
+        for it in got_items:
+            cache.setdefault(it.get("givenUrl"), []).append(it)
+        for q in fresh:
+            cache.setdefault(url_of(q), [])
+        save("data/tm/search_cache.json", cache)  # sofort sichern, damit bezahlte Suchen nie verloren gehen
+    items = [it for q in queries.values() for it in cache.get(url_of(q), [])]
     by_given = {}
     for it in items:
         by_given.setdefault(it.get("givenUrl"), []).append(it)
@@ -115,7 +126,7 @@ def main():
                 pass
             if tokens(h.get("Club")) & tokens(c["team"]):
                 s += 2
-            if tokens(queries[c["id"]]) & tokens(h.get("Name/Position") or h.get("url", "").split("/")[3].replace("-", " ")):
+            if tokens(queries[c["id"]]) & tokens(h.get("Name/Position") or str(h.get("url", "")).split("/")[3].replace("-", " ")):
                 s += 1
             if s > best_s:
                 best, best_s = h, s

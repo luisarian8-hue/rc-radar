@@ -12,6 +12,10 @@ concurrency:
   group: weekly
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   run:
     runs-on: ubuntu-latest
