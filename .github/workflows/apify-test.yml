@@ -2,6 +2,16 @@ name: Apify-Test
 
 on:
   workflow_dispatch:
+    inputs:
+      url:
+        description: Start-URL
+        default: https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38
+      extra:
+        description: Zweite URL
+        default: https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua
+      depth:
+        description: crawlDepth
+        default: '2'
 
 permissions:
   contents: write
@@ -21,6 +31,9 @@ jobs:
       - name: Transfermarkt über Apify testen
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          TM_URL: ${{ inputs.url }}
+          TM_EXTRA: ${{ inputs.extra }}
+          TM_DEPTH: ${{ inputs.depth }}
         run: python scripts/apify_test.py
       - name: Ergebnis speichern
         run: |
