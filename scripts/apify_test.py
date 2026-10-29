@@ -7,14 +7,15 @@ import json, os, sys, urllib.request
 
 TOKEN = os.environ.get("APIFY_TOKEN", "").strip()
 ACTOR = os.environ.get("APIFY_ACTOR", "curious_coder~transfermarkt")
-START = os.environ.get("TM_URL", "https://www.transfermarkt.com/fortuna-dusseldorf/kader/verein/38")
+START = os.environ.get("TM_URL", "https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38")
+EXTRA = "https://www.transfermarkt.com/lionel-messi/profil/spieler/28003"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main():
     if not TOKEN:
         sys.exit("Secret APIFY_TOKEN fehlt.")
-    body = {"startUrl": START, "startUrls": [{"url": START}], "crawlDepth": 1, "pageDepth": 1, "parallels": 2,
+    body = {"startUrl": START, "startUrls": [{"url": START}, {"url": EXTRA}], "crawlDepth": 1, "pageDepth": 1, "parallels": 2,
             "proxyConfig": {"useApifyProxy": True}}
     req = urllib.request.Request(f"https://api.apify.com/v2/acts/{ACTOR}/run-sync-get-dataset-items?timeout=280",
                                  data=json.dumps(body).encode(), method="POST",
@@ -32,7 +33,7 @@ def main():
     text = "\n".join(md) + "\n"
     os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
     open(os.path.join(ROOT, "reports", "apify_test.md"), "w", encoding="utf-8").write(text)
-    json.dump(items[:5], open(os.path.join(ROOT, "reports", "apify_sample.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    json.dump([dict(x, players=(x.get("players") or [])[:3]) if isinstance(x, dict) else x for x in items[:6]], open(os.path.join(ROOT, "reports", "apify_sample.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(text)
     print(text)
