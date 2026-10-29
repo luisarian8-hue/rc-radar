@@ -11,8 +11,9 @@ from af import load, save
 
 TOKEN = os.environ.get("APIFY_TOKEN", "").strip()
 ACTOR = os.environ.get("APIFY_ACTOR", "curious_coder~transfermarkt")
-NEW_MAX = int(os.environ.get("TM_NEW", "120"))
-ROTATE = int(os.environ.get("TM_ROTATE", "150"))
+NEW_MAX = int(os.environ.get("TM_NEW", "80"))
+ROTATE = int(os.environ.get("TM_ROTATE", "50"))
+CAND_MAX = int(os.environ.get("TM_CAND", "200"))
 BUDGET = float(os.environ.get("TM_BUDGET_USD", "4.5"))
 API = "https://api.apify.com/v2"
 
@@ -38,7 +39,7 @@ def run(urls):
     """Actor-Lauf über eine URL-Liste, wartet bis fertig, gibt die Datensätze zurück."""
     if not urls:
         return []
-    body = {"startUrl": urls[0], "startUrls": [{"url": u} for u in urls], "crawlDepth": 1, "pageDepth": 1, "parallels": 3,
+    body = {"startUrl": urls[0], "startUrls": [{"url": u} for u in urls], "crawlDepth": 1, "pageDepth": 1, "parallels": 6,
             "proxyConfig": {"useApifyProxy": True}}
     r = call("POST", f"/acts/{ACTOR}/runs", body)["data"]
     rid, ds = r["id"], r["defaultDatasetId"]
@@ -138,7 +139,7 @@ def main():
     save("data/tm/map.json", tmap)
 
     # 2) Profile: Kandidaten + Wechsel
-    cand_ids = [c["id"] for c in cand if (tmap.get(c["id"]) or {}).get("url")]
+    cand_ids = [c["id"] for c in cand if (tmap.get(c["id"]) or {}).get("url")][:CAND_MAX]
     others = sorted((pid for pid, v in tmap.items() if v.get("url") and pid not in cand_ids), key=lambda p: (profiles.get(p) or {}).get("fetched", ""))[:ROTATE]
     ids = cand_ids + others
     items = run([tmap[p]["url"] for p in ids])

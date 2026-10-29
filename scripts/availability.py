@@ -163,12 +163,15 @@ def summarize(o):
         else:
             break
     injured_now = bool(seq) and seq[-1]["s"] == "V"
+    # Comeback: Nach einem Ausfall (ab 2 Spielen verletzt/gesperrt) in den letzten 9 Spielen ist wenig Spielzeit normal
+    tail9 = "".join(x["s"] for x in seq[-9:])
+    comeback = "VV" in tail9 or "GG" in tail9
     o["role"] = {"before": counts(before), "recent": counts(recent), "trailingUnknown": trail, "injuredNow": injured_now,
-                 "statusLine": "".join(x["s"] for x in seq[-16:])}
+                 "statusLine": "".join(x["s"] for x in seq[-16:]), "comeback": comeback}
     # Rollenverlust nur bei Belegen: genug belastbare Spiele in beiden Fenstern
     b, r = o["role"]["before"], o["role"]["recent"]
     o["role"]["loss"] = bool(b["share"] is not None and r["share"] is not None and b["avail"] >= 4 and r["avail"] >= 3
-                             and b["share"] >= .45 and r["share"] <= .5 and r["share"] <= b["share"] - .3 and not injured_now)
+                             and b["share"] >= .45 and r["share"] <= .5 and r["share"] <= b["share"] - .3 and not injured_now and not comeback)
 
 
 if __name__ == "__main__":
