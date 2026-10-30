@@ -13,7 +13,7 @@ TOKEN = os.environ.get("APIFY_TOKEN", "").strip()
 ACTOR = os.environ.get("APIFY_ACTOR", "curious_coder~transfermarkt")
 NEW_MAX = int(os.environ.get("TM_NEW", "80"))
 ROTATE = int(os.environ.get("TM_ROTATE", "50"))
-CAND_MAX = int(os.environ.get("TM_CAND", "200"))
+CAND_MAX = int(os.environ.get("TM_CAND", "150"))
 BUDGET = float(os.environ.get("TM_BUDGET_USD", "4.5"))
 API = "https://api.apify.com/v2"
 
@@ -132,7 +132,7 @@ def main():
             if s > best_s:
                 best, best_s = h, s
         if best and best_s >= 3:
-            tmap[c["id"]] = {"url": best["url"], "score": best_s, "mapped": today.isoformat()}
+            tmap[c["id"]] = {"url": best["url"], "score": best_s, "mapped": today.isoformat(), "mv": best.get("Market Value")}
             mapped += 1
         else:
             tmap[c["id"]] = {"url": None, "tried": today.isoformat()}

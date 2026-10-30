@@ -163,6 +163,15 @@ def main():
     tm = load("data/tm/profiles.json", {})
     snaps = load("data/tm/snapshots.json", {})
     clients = set(load("config/clients.json", []))
+    MV_MAX = int(os.environ.get("MV_MAX", "2000000"))
+    from tm_values import money
+    vals = load("data/tm/values.json", {"players": {}})["players"]
+    tmap = load("data/tm/map.json", {})
+    def market_value(pid):
+        v = (vals.get(pid) or {}).get("mv")
+        if v is None and (tmap.get(pid) or {}).get("mv"):
+            v = money(tmap[pid]["mv"])
+        return v
     today = dt.date.today()
     week = f"{today.isocalendar()[0]}-W{today.isocalendar()[1]:02d}"
 
@@ -285,6 +294,9 @@ def main():
         r = by_pid.get(pid)
         if not r or info["age"] < 18 or info["age"] > 26 or pid in clients:
             continue
+        mv = market_value(pid)
+        if mv is not None and mv >= MV_MAX:  # Vorgabe Luis: nur Spieler unter 2 Mio. Marktwert
+            continue
         A = pct(qpop[r["pos"]], r["idx"] - .5 * r["se"])
         A_wo = pct(qpop[r["pos"]], r["idx_wo"] - .5 * r["se"])
         spike = A - A_wo > 8
@@ -360,7 +372,7 @@ def main():
                      "trailingUnknown": role["trailingUnknown"], "injuredNow": role["injuredNow"], "starts": b["starts"] + rc["starts"]},
             "contract": {"end": cend, "months": months, "lastExtension": prof.get("lastExtension"), "loanFrom": prof.get("loanFrom"), "loanUntil": prof.get("loanUntil"), "loanLeft": loan_left},
             "agent": ag, "coach": {"date": coach_date, "name": cc[-1]["coach"] if cc else None, "weeks": round(coach_weeks, 1) if coach_weeks is not None else None},
-            "ligaSmall": liga > 0, "tm": prof.get("url"),
+            "ligaSmall": liga > 0, "tm": prof.get("url"), "mv": mv,
             "metrics": {k: {"l": LABEL[k], "v": round(r[k] / r["n90"], 2) if k in COUNT and r["n90"] else (round(r[k], 1) if r[k] is not None else None)} for k in W[r["pos"]]},
         }
 

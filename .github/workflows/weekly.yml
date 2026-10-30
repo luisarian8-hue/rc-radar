@@ -33,6 +33,10 @@ jobs:
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
         run: python scripts/availability.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Marktwerte (alle 28 Tage)
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: python scripts/tm_values.py 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" reports/tm_values_log.txt
       - name: Scores (vorläufig, für Kandidaten)
         run: python scripts/score.py
       - name: Transfermarkt über Apify
