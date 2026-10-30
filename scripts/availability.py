@@ -147,7 +147,7 @@ def summarize(o):
             # Wer nach der Abwesenheit sofort wieder in der Startelf steht, war ausgefallen, nicht aussortiert.
             # Gleiches gilt, wenn er davor Stammspieler war (letzte 3 Spiele vor der Lücke in der Startelf)
             # und die Lücke noch andauert: Grund unklar, kein Rollenverlust.
-            back_start = j < len(seq) and seq[j]["s"] == "S"
+            back_start = any(x["s"] == "S" for x in seq[j:j + 2])  # spätestens im zweiten Spiel danach wieder Startelf
             prev = [x["s"] for x in seq[max(0, i - 3):i]]
             was_regular = len(prev) >= 2 and all(c == "S" for c in prev)
             for x in seq[i:j]:
