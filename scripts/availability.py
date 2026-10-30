@@ -48,15 +48,30 @@ def main():
             for tid in f["teams"]:
                 by_team[tid].append(f)
 
-        # Trainerwechsel je Verein
+        # Trainerwechsel je Verein: Amtszeiten aus den Aufstellungen. Einzelspiele eines anderen Namens
+        # (Interims, Co-Trainer, Datenfehler) und A→B→A zählen nicht. Bestätigung später über /coachs.
         for tid, fs in by_team.items():
-            ch, last = [], None
+            spells = []
             for f in fs:
-                c = f["teams"][tid].get("coach")
-                if c and last and c != last:
-                    ch.append({"date": f["date"], "coach": f["teams"][tid].get("coachName")})
-                last = c or last
-            teams_out[tid] = {"league": key, "name": fs[-1]["teams"][tid]["name"], "coachChanges": ch, "matches": len(fs)}
+                c, n = f["teams"][tid].get("coach"), f["teams"][tid].get("coachName")
+                if not c:
+                    continue
+                if spells and spells[-1]["id"] == c:
+                    spells[-1]["n"] += 1
+                else:
+                    spells.append({"id": c, "name": n, "start": f["date"], "n": 1})
+            clean = []
+            for i, sp in enumerate(spells):
+                is_last = i == len(spells) - 1
+                if sp["n"] < 2 and not is_last:
+                    continue
+                if clean and clean[-1]["id"] == sp["id"]:
+                    clean[-1]["n"] += sp["n"]
+                    continue
+                clean.append(dict(sp))
+            ch = [{"date": sp["start"], "coach": sp["name"], "coachId": sp["id"], "matches": sp["n"]} for sp in clean[1:]]
+            teams_out[tid] = {"league": key, "name": fs[-1]["teams"][tid]["name"], "coachChanges": ch, "matches": len(fs),
+                              "coachNow": clean[-1]["name"] if clean else None, "coachNowId": clean[-1]["id"] if clean else None}
 
         # Letzter Verein je Spieler = Verein seines letzten Kaderplatzes
         last_team = {}
@@ -127,6 +142,38 @@ def main():
                     if sp.get("start") and sp["start"] <= x["d"] <= end:
                         x["s"] = "G" if "suspen" in (sp.get("type") or "").lower() else "V"
         summarize(o)
+
+    # Trainerwechsel der letzten 12 Wochen mit API-Football /coachs bestätigen (Startdatum beim Verein)
+    cache = load("data/af/coaches.json", {})
+    for tid, t in teams_out.items():
+        ch = t["coachChanges"]
+        if not ch or (today - dt.date.fromisoformat(ch[-1]["date"])).days > 84:
+            continue
+        cid = t.get("coachNowId")
+        key_c = f"{tid}:{cid}"
+        if key_c not in cache:
+            try:
+                resp = get("coachs", team=tid)["response"]
+            except RuntimeError:
+                resp = []
+            start = None
+            for co in resp:
+                if co.get("id") != cid:
+                    continue
+                for car in co.get("career") or []:
+                    if str((car.get("team") or {}).get("id")) == str(tid) and not car.get("end"):
+                        start = car.get("start")
+            cache[key_c] = {"start": start, "checked": today.isoformat()}
+        st = cache[key_c].get("start")
+        if st:
+            ch[-1]["date"], ch[-1]["confirmed"] = st, True
+            if (today - dt.date.fromisoformat(st)).days > 84:
+                ch[-1]["old"] = True  # Amtsantritt liegt länger zurück: kein frischer Trainerwechsel
+        elif ch[-1]["matches"] < 2:
+            ch.pop()  # nur ein Spiel, nicht bestätigt: kein Wechsel
+    save("data/af/coaches.json", cache)
+    for t in teams_out.values():
+        t["coachChanges"] = [c for c in t["coachChanges"] if not c.get("old")]
 
     save("data/availability.json", {"updated": today.isoformat(), "players": out, "teams": teams_out})
     n_unk = sum(1 for o in out.values() if o["role"]["trailingUnknown"] >= 2)

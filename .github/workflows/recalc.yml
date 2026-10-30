@@ -1,0 +1,43 @@
+name: Neu berechnen
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  recalc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: API-Football aktualisieren
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python scripts/fetch_af.py
+      - name: Spielzeit, Ausfälle, Trainer
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python scripts/availability.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Scores
+        run: python scripts/score.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Speichern
+        run: |
+          git config user.name "rc-radar-bot"
+          git config user.email "rc-radar-bot@users.noreply.github.com"
+          git add data/ radar.json
+          git diff --cached --quiet || git commit -m "Neu berechnet $(date +%F)"
+          git pull --rebase origin main
+          git push
