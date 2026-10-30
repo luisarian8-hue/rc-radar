@@ -1,151 +1,120 @@
 [
   {
-    "givenUrl": "https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38",
-    "id": "38",
-    "url": "https://www.transfermarkt.com/fortuna-dusseldorf/startseite/verein/38",
-    "type": "club",
-    "players": [
-      {
-        "#": "1",
-        "Player": [
-          "Lasse Rieß",
-          "Goalkeeper"
-        ],
-        "Date of birth/Age": "27/07/2001 (25)",
-        "Market value": "€350K",
-        "Nat.": "Germany"
-      },
-      {
-        "#": "22",
-        "Player": [
-          "Louis Lord",
-          "Goalkeeper"
-        ],
-        "Date of birth/Age": "22/10/2003 (23)",
-        "Market value": "€250K",
-        "Nat.": "Germany"
-      },
-      {
-        "#": "41",
-        "Player": [
-          "Milán Czakó",
-          "Goalkeeper"
-        ],
-        "Date of birth/Age": "01/04/2006 (20)",
-        "Market value": "€25K",
-        "Nat.": "Hungary"
-      }
-    ],
-    "transfers": [],
-    "careerStats": []
-  },
-  {
-    "id": "848509",
-    "url": "https://www.transfermarkt.com/jackson-tchatchoua/profil/spieler/848509",
-    "Name/Position": [
-      "Jackson Tchatchoua",
-      "Wolverhampton Wanderers"
-    ],
-    "Position": "RB",
-    "Club": "Wolverhampton Wanderers",
-    "Age": "25",
-    "Market Value": "€12M",
-    "Agents": "DWMA",
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": [
-      "Cameroon",
-      "Belgium"
-    ],
+    "id": "865",
+    "url": "https://www.transfermarkt.com/fc-midtjylland/startseite/verein/865/saison_id/2026",
+    "Club_0": "FC Midtjylland",
+    "Club_1": "FC Midtjylland",
+    "name": "29",
+    "Squad": "24.9",
+    "ø age": "18",
+    "Foreigners": "€2.6M",
+    "ø market value": "€77M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
   },
   {
-    "id": "236206",
-    "url": "https://www.transfermarkt.com/olivier-tchatchoua/profil/spieler/236206",
-    "Name/Position": [
-      "Olivier Tchatchoua",
-      "Retired"
-    ],
-    "Position": "Defender",
-    "Club": "Retired",
-    "Age": "44",
-    "Market Value": null,
-    "Agents": null,
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": "Cameroon",
+    "id": "190",
+    "url": "https://www.transfermarkt.com/fc-kopenhagen/startseite/verein/190/saison_id/2026",
+    "Club_0": "FC Copenhagen",
+    "Club_1": "FC Copenhagen",
+    "name": "25",
+    "Squad": "25.2",
+    "ø age": "17",
+    "Foreigners": "€2.6M",
+    "ø market value": "€64M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
   },
   {
-    "id": "1005297",
-    "url": "https://www.transfermarkt.com/rocky-marciano/profil/spieler/1005297",
-    "Name/Position": [
-      "Rocky Marciano",
-      "FC Baniyas"
-    ],
-    "Position": "CF",
-    "Club": "FC Baniyas",
-    "Age": "24",
-    "Market Value": "€200K",
-    "Agents": "NSPORTS & bGROUP",
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": "Cameroon",
+    "id": "2778",
+    "url": "https://www.transfermarkt.com/fc-nordsjaelland/startseite/verein/2778/saison_id/2026",
+    "Club_0": "FC Nordsjælland",
+    "Club_1": "FC Nordsjælland",
+    "name": "29",
+    "Squad": "23.4",
+    "ø age": "11",
+    "Foreigners": "€1.5M",
+    "ø market value": "€45M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
   },
   {
-    "id": "1205385",
-    "url": "https://www.transfermarkt.com/clemens-inou-tchatchoua/profil/spieler/1205385",
-    "Name/Position": [
-      "Clemens Inou Tchatchoua",
-      "KSC/FCB Donaustadt"
-    ],
-    "Position": "Defender",
-    "Club": "KSC/FCB Donaustadt",
-    "Age": "20",
-    "Market Value": null,
-    "Agents": null,
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": "Austria",
+    "id": "206",
+    "url": "https://www.transfermarkt.com/brondby-if/startseite/verein/206/saison_id/2026",
+    "Club_0": "Bröndby IF",
+    "Club_1": "Bröndby IF",
+    "name": "27",
+    "Squad": "24.9",
+    "ø age": "11",
+    "Foreigners": "€1.6M",
+    "ø market value": "€44M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
   },
   {
-    "id": "1420394",
-    "url": "https://www.transfermarkt.com/michael-tchatchoua/profil/spieler/1420394",
-    "Name/Position": [
-      "Michael Tchatchoua",
-      "US Avranches U18"
-    ],
-    "Position": "Defender",
-    "Club": "US Avranches U18",
-    "Age": null,
-    "Market Value": null,
-    "Agents": null,
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": "France",
+    "id": "678",
+    "url": "https://www.transfermarkt.com/aarhus-gf/startseite/verein/678/saison_id/2026",
+    "Club_0": "Aarhus GF",
+    "Club_1": "Aarhus GF",
+    "name": "28",
+    "Squad": "26.2",
+    "ø age": "15",
+    "Foreigners": "€1.4M",
+    "ø market value": "€38M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
   },
   {
-    "id": "1607774",
-    "url": "https://www.transfermarkt.com/harold-tchatchouang/profil/spieler/1607774",
-    "Name/Position": [
-      "Harold Tchatchouang",
-      "US Thionville Lusitanos U17"
-    ],
-    "Position": "Midfield",
-    "Club": "US Thionville Lusitanos U17",
-    "Age": null,
-    "Market Value": null,
-    "Agents": null,
-    "givenUrl": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Tchatchoua",
-    "Nat.": "Luxembourg",
+    "id": "173",
+    "url": "https://www.transfermarkt.com/odense-boldklub/startseite/verein/173/saison_id/2026",
+    "Club_0": "Odense Boldklub",
+    "Club_1": "Odense Boldklub",
+    "name": "28",
+    "Squad": "25.2",
+    "ø age": "14",
+    "Foreigners": "€785K",
+    "ø market value": "€22M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "1063",
+    "url": "https://www.transfermarkt.com/viborg-ff/startseite/verein/1063/saison_id/2026",
+    "Club_0": "Viborg FF",
+    "Club_1": "Viborg FF",
+    "name": "25",
+    "Squad": "23.6",
+    "ø age": "11",
+    "Foreigners": "€812K",
+    "ø market value": "€20M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
+    "players": [],
+    "transfers": [],
+    "careerStats": []
+  },
+  {
+    "id": "5724",
+    "url": "https://www.transfermarkt.com/randers-fc/startseite/verein/5724/saison_id/2026",
+    "Club_0": "Randers FC",
+    "Club_1": "Randers FC",
+    "name": "28",
+    "Squad": "25.2",
+    "ø age": "16",
+    "Foreigners": "€614K",
+    "ø market value": "€17M",
+    "givenUrl": "https://www.transfermarkt.com/superligaen/startseite/wettbewerb/DK1",
     "players": [],
     "transfers": [],
     "careerStats": []
