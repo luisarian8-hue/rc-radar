@@ -173,7 +173,9 @@ def main():
             ch.pop()  # nur ein Spiel, nicht bestätigt: kein Wechsel
     save("data/af/coaches.json", cache)
     for t in teams_out.values():
-        t["coachChanges"] = [c for c in t["coachChanges"] if not c.get("old")]
+        # Ist der aktuelle Trainer schon länger im Amt, gibt es keinen frischen Wechsel (auch keine älteren Interims)
+        if t["coachChanges"] and t["coachChanges"][-1].get("old"):
+            t["coachChanges"] = []
 
     save("data/availability.json", {"updated": today.isoformat(), "players": out, "teams": teams_out})
     n_unk = sum(1 for o in out.values() if o["role"]["trailingUnknown"] >= 2)
