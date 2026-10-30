@@ -1,0 +1,48 @@
+name: Transfermarkt nachladen
+
+on:
+  workflow_dispatch:
+    inputs:
+      new:
+        description: Neue Zuordnungen
+        default: '60'
+      rotate:
+        description: Profile im Wechsel
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Transfermarkt
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          TM_NEW: ${{ inputs.new }}
+          TM_ROTATE: ${{ inputs.rotate }}
+        run: python scripts/tm.py 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" reports/tm_log.txt
+      - name: Scores
+        run: python scripts/score.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Speichern
+        run: |
+          git config user.name "rc-radar-bot"
+          git config user.email "rc-radar-bot@users.noreply.github.com"
+          git add data/ radar.json reports/
+          git diff --cached --quiet || git commit -m "Transfermarkt nachgeladen $(date +%F)"
+          git pull --rebase origin main
+          git push

@@ -39,7 +39,7 @@ def run(urls):
     """Actor-Lauf über eine URL-Liste, wartet bis fertig, gibt die Datensätze zurück."""
     if not urls:
         return []
-    body = {"startUrl": urls[0], "startUrls": [{"url": u} for u in urls], "crawlDepth": 1, "pageDepth": 1, "parallels": 6,
+    body = {"startUrl": urls[0], "startUrls": [{"url": u} for u in urls], "crawlDepth": 1, "pageDepth": 1, "parallels": 2,
             "proxyConfig": {"useApifyProxy": True}}
     r = call("POST", f"/acts/{ACTOR}/runs", body)["data"]
     rid, ds = r["id"], r["defaultDatasetId"]
@@ -147,8 +147,8 @@ def main():
     got = 0
     for pid in ids:
         it = by_url.get(tmap[pid]["url"])
-        if not it:
-            continue
+        if not it or not (it.get("Contract expires") or it.get("Player agent") or it.get("Current club")):
+            continue  # leere Seite (z. B. geblockt): alte Daten nicht überschreiben
         got += 1
         loan_from = next((it[k] for k in it if "loan from" in k.lower()), None)
         parent_end = next((date_iso(it[k]) for k in it if "contract there" in k.lower()), None)
