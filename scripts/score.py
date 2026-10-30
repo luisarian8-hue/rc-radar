@@ -397,9 +397,19 @@ def main():
     cand = sorted((o for o in out.values() if o["mins"] >= 450 and (o["S"] >= .75 or (o["role"]["loss"] and o["S"] >= .6))), key=lambda o: -o["S"])[:300]
     save("data/candidates.json", [{"id": o["id"], "name": o["name"], "age": o["age"], "team": o["teamName"], "league": o["league"]} for o in cand])
 
-    radar = sorted((o for o in out.values() if o["P"] >= 60), key=lambda o: -o["P"])
-    save("radar.json", {"updated": today.isoformat(), "week": week, "weeks": weeks, "players": radar,
-                        "allTime": all_time(hist, out, weeks)})
+    # Rang diese Woche und Vorwoche (für ▲/▼ in der Top-Liste)
+    for i, o in enumerate(sorted(out.values(), key=lambda o: -o["P"])):
+        o["rank"] = i + 1
+    if prev_week:
+        for i, pid in enumerate(sorted(hist[prev_week], key=lambda k: -hist[prev_week][k])):
+            if pid in out:
+                out[pid]["prevRank"] = i + 1
+    at = all_time(hist, out, weeks)
+    keep = {o["id"] for o in out.values() if o["P"] >= 60} | {x["id"] for x in at[:60]}
+    radar = sorted((out[k] for k in keep if k in out), key=lambda o: -o["P"])
+    save("radar.json", {"updated": today.isoformat(), "week": week, "weeks": weeks, "players": radar, "allTime": at[:60],
+                        "stats": {"rated": len(out), "inRadar": sum(1 for o in out.values() if o["P"] >= 70), "leagues": len(cfg["leagues"]),
+                                  "withContract": sum(1 for o in out.values() if o["contract"]["end"])}})
     n70 = sum(1 for o in out.values() if o["P"] >= 70)
     print(f"{len(out)} Spieler bewertet · {n70} im Radar (ab 70) · {len(cand)} Kandidaten für Transfermarkt · max {max((o['P'] for o in out.values()), default=0)}")
 
