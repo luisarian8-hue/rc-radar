@@ -10,7 +10,7 @@ Gleiche Logik wie im Artefakt (Kern v7), angepasst an die Felder von API-Footbal
 
 Ausgabe: data/scores.json (alle 18–26), data/candidates.json (für Transfermarkt), data/history.json, radar.json
 """
-import bisect, datetime as dt, json, math, os
+import bisect, datetime as dt, html, json, math, os
 from collections import defaultdict
 from af import load, save
 
@@ -361,8 +361,8 @@ def main():
         rest = (1 if months is not None else .7) * (1 if info["injuryData"] else .85) * (1 if r["posSrc"] == "grid" else .85)
         conf = round(100 * math.sqrt(sample * rest))
         out[pid] = {
-            "id": pid, "name": info["name"], "age": info["age"], "birth": info["birth"], "pos": r["pos"], "posName": POSN[r["pos"]],
-            "league": r["league"], "leagueName": cfg["leagues"][r["league"]]["name"], "team": info["team"], "teamName": tinfo.get("name"),
+            "id": pid, "name": html.unescape(info["name"]), "age": info["age"], "birth": info["birth"], "pos": r["pos"], "posName": POSN[r["pos"]],
+            "league": r["league"], "leagueName": cfg["leagues"][r["league"]]["name"], "team": info["team"], "teamName": html.unescape(tinfo.get("name") or ""),
             "P": P, "S": round(S, 4), "O0": round(O0, 4), "O1": round(O1, 4), "O": round(O, 4), "G": round(G, 4),
             "crit": {"A": A, "B": B, "C": round(C, 3), "D": round(D, 3), "E": ag["v"]}, "spike": spike, "prevPct": prevPct,
             "syn": [{"k": k, "l": l, "v": round(v, 3)} for k, l, v in syn], "damp": [{"k": k, "l": l, "f": f} for k, l, f in damp],
