@@ -416,10 +416,13 @@ def main():
             if pid in out:
                 out[pid]["prevRank"] = i + 1
     at = all_time(hist, out, weeks)
-    keep = {o["id"] for o in out.values() if o["P"] >= 60} | {x["id"] for x in at[:60]}
+    # Im Radar nur Spieler mit bestätigtem Marktwert unter der Grenze (unbekannt = noch nicht anzeigen)
+    shown = {pid for pid, o in out.items() if o["mv"] is not None}
+    at = [x for x in at if x["id"] in shown]
+    keep = {o["id"] for o in out.values() if o["P"] >= 50 and o["id"] in shown} | {x["id"] for x in at[:60]}
     radar = sorted((out[k] for k in keep if k in out), key=lambda o: -o["P"])
     save("radar.json", {"updated": today.isoformat(), "week": week, "weeks": weeks, "players": radar, "allTime": at[:60],
-                        "stats": {"rated": len(out), "inRadar": sum(1 for o in out.values() if o["P"] >= 70), "leagues": len(cfg["leagues"]),
+                        "stats": {"rated": len(out), "inRadar": sum(1 for o in out.values() if o["P"] >= 70 and o["mv"] is not None), "leagues": len(cfg["leagues"]),
                                   "withContract": sum(1 for o in out.values() if o["contract"]["end"])}})
     n70 = sum(1 for o in out.values() if o["P"] >= 70)
     print(f"{len(out)} Spieler bewertet · {n70} im Radar (ab 70) · {len(cand)} Kandidaten für Transfermarkt · max {max((o['P'] for o in out.values()), default=0)}")
