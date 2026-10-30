@@ -37,6 +37,13 @@ jobs:
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: python scripts/tm_values.py 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" reports/tm_values_log.txt
+      - name: Zwischenstand speichern (Marktwerte)
+        run: |
+          git config user.name "rc-radar-bot"
+          git config user.email "rc-radar-bot@users.noreply.github.com"
+          git add data/ reports/ || true
+          git diff --cached --quiet || git commit -m "Zwischenstand $(date +%F)"
+          git pull --rebase origin main && git push
       - name: Scores (vorläufig, für Kandidaten)
         run: python scripts/score.py
       - name: Transfermarkt über Apify
