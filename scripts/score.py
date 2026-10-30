@@ -306,7 +306,9 @@ def main():
         prevPct = pct(prevpop[r["pos"]], r["prevIdx"]) if r["prevIdx"] is not None and prevpop[r["pos"]] else None
         role = info["role"]
         # C · Vertrag / Leihe
-        prof = tm.get(pid) or {}
+        prof = dict(tm.get(pid) or {})
+        if prof.get("loanFrom") and not prof.get("v2"):  # alte Profile: Felder waren vertauscht
+            prof["contractEnd"], prof["loanUntil"] = prof.get("loanUntil") or prof.get("contractEnd"), prof.get("contractEnd")
         months, cend, loan_left = None, prof.get("contractEnd"), None
         if cend:
             ce = dt.date.fromisoformat(cend)
@@ -315,10 +317,7 @@ def main():
         if prof.get("loanUntil"):
             lu = dt.date.fromisoformat(prof["loanUntil"])
             loan_left = max(0, (lu.year - today.year) * 12 + lu.month - today.month)
-            if loan_left <= 6:
-                C = max(C, .75)
-            elif loan_left <= 12:
-                C = max(C, .55)
+            # Vorgabe Luis: bei Leihen zählt nur der Vertrag beim Heimatverein
         ext_recent = False
         if prof.get("lastExtension"):
             ext_recent = (today - dt.date.fromisoformat(prof["lastExtension"])).days <= 182

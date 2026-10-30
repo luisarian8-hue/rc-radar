@@ -151,12 +151,14 @@ def main():
             continue
         got += 1
         loan_from = next((it[k] for k in it if "loan from" in k.lower()), None)
-        loan_until = next((date_iso(it[k]) for k in it if "contract there" in k.lower()), None)
-        prof = {"url": tmap[pid]["url"], "fetched": today.isoformat(), "contractEnd": date_iso(it.get("Contract expires")),
+        parent_end = next((date_iso(it[k]) for k in it if "contract there" in k.lower()), None)
+        here_end = date_iso(it.get("Contract expires"))
+        # Bei Leihen zählt der Vertrag beim Heimatverein („Contract there expires“), das Leihende ist Zusatzinfo
+        prof = {"url": tmap[pid]["url"], "fetched": today.isoformat(), "v2": True,
+                "contractEnd": parent_end if loan_from and parent_end else here_end,
                 "lastExtension": date_iso(it.get("Last contract extension")), "agent": it.get("Player agent"),
-                "club": it.get("Current club"), "position": it.get("Position"), "loanFrom": loan_from, "loanUntil": loan_until}
-        if loan_from and not loan_until:
-            prof["loanUntil"] = prof["contractEnd"]
+                "club": it.get("Current club"), "position": it.get("Position"), "loanFrom": loan_from,
+                "loanUntil": here_end if loan_from else None}
         profiles[pid] = prof
         sn = snaps.setdefault(pid, [])
         rec = {"week": week, "agent": prof["agent"], "contractEnd": prof["contractEnd"]}
